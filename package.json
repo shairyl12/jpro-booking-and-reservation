@@ -1,7 +1,6 @@
 {
   "name": "jpro-booking-and-reservation",
   "version": "1.0.0",
-  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -16,6 +15,7 @@
     "@tailwindcss/vite": "4.1.17",
     "@vitejs/plugin-react": "5.1.1",
     "typescript": "5.9.3",
-    "vite": "7.3.2"
+    "vite": "7.3.2",
+    "vite-plugin-singlefile": "2.3.0" 
   }
 }
