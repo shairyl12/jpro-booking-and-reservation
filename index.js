@@ -1,17 +1,32 @@
-// index.js (Place this in your root folder)
 const express = require('express');
 const path = require('path');
+const mysql = require('mysql2');
+require('dotenv').config();
+
 const app = express();
-
-// Middleware to handle JSON and static files
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'dist')));
 
-// Import your routes
+// Database Connection
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
+  ssl: { rejectUnauthorized: false } 
+});
+
+db.connect(err => {
+  if (err) console.error('DB Connection Failed:', err);
+  else console.log('Connected to Aiven MySQL');
+});
+
+// API Routes
 const packagesRouter = require('./server/routes/packages');
 app.use('/api/packages', packagesRouter);
 
-// Serve your React frontend
+// Serve Frontend
+app.use(express.static(path.join(__dirname, 'dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
