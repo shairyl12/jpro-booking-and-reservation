@@ -1,4 +1,5 @@
-const mysql = require('mysql2/promise'); // Note the '/promise'
+// server/database.js
+const mysql = require('mysql2');
 require('dotenv').config();
 
 const pool = mysql.createPool({
@@ -13,4 +14,5 @@ const pool = mysql.createPool({
   ssl: { rejectUnauthorized: false }
 });
 
-module.exports = { pool };
+// Export as promise-based pool
+module.exports = pool.promise();
