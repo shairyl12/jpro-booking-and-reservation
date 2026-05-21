@@ -1,5 +1,5 @@
 // server/database.js
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise'); // Must use '/promise' for your async/await code
 require('dotenv').config();
 
 const pool = mysql.createPool({
@@ -8,11 +8,9 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
+  ssl: { rejectUnauthorized: false }, // Bypassing for cloud deployment
   waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  ssl: { rejectUnauthorized: false }
+  connectionLimit: 10
 });
 
-// Export as promise-based pool
-module.exports = pool.promise();
+module.exports = { pool };
